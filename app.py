@@ -1,3 +1,4 @@
+#Libraries
 import pickle
 import streamlit as st
 import requests
@@ -5,6 +6,7 @@ import pandas as pd
 
 import base64
 
+#Web-page configuration
 st.set_page_config(
      page_title="Cinephile",
      page_icon="❄",
@@ -25,26 +27,6 @@ st.markdown(page_bg_img, unsafe_allow_html=True)
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 def fetch_poster(id):
     url = "https://api.themoviedb.org/3/movie/{}?api_key=8265bd1679663a7ea12ac168da84d2e8&language=en-US".format(id)
     data = requests.get(url)
@@ -61,38 +43,20 @@ def recommend(movie):
     recommended_movie_posters = []
     recommended_movie_genres=[]
 
-
-
-
-
-
-
-
-
-
-
-
-    for i in distances[1:8]:
+for i in distances[1:8]:
         # fetch the movie poster
         id = movies.iloc[i[0]].movie_id
         recommended_movie_posters.append(fetch_poster(id))
         recommended_movie_names.append(movies.iloc[i[0]].title)
-
-
-    return recommended_movie_names,recommended_movie_posters,recommended_movie_genres
-
+        return recommended_movie_names,recommended_movie_posters,recommended_movie_genres
 
 
 
 
+#Setting of Website's name
 col1, mid = st.columns([1,1])
 with col1:
     st.image('logo_website.png', width=300)
-
-
-
-
-
 
 
 
@@ -109,7 +73,7 @@ selected_movie = st.selectbox(
 
 
 
-# Security
+# Security (Login/Sign-up)
 #passlib,hashlib,bcrypt,scrypt
 import hashlib
 def make_hashes(password):
@@ -168,10 +132,6 @@ def main():
 			else:
 				st.sidebar.warning("Incorrect Username/Password")
 
-
-
-
-
 	elif choice == "SignUp":
 
 		new_user = st.sidebar.text_input("Username")
@@ -183,21 +143,11 @@ def main():
 			st.sidebar.success("You have successfully created a valid Account")
 			st.sidebar.info("Go to Login Menu to login")
 
-
-
 if __name__ == '__main__':
 	main()
 
 
-
-
-
-
-
-
-
-
-
+#Displaying recommended movie names and posters
 
 if st.button('Show Recommendation'):
     recommended_movie_names, recommended_movie_posters,recommended_movie_genres = recommend(selected_movie)
@@ -233,10 +183,7 @@ if st.button('Show Recommendation'):
 
 
 
-
-
-
-# ---- CONTACT ----
+# ---- CONTACT SECTION ----
 with st.container():
     st.write("---")
     st.header("Contact")
@@ -273,11 +220,10 @@ local_css("style/style.css.txt")
 
 
 
-# ---- CONTACT ----
+# ---- ABOUT SECTION ----
 with st.container():
     st.write("---")
     st.header("About")
-
     st.write("This website is made by **Satakshi Singh** under the mentorship of Microsoft.")
 
 
